@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjt.testplatform.dao.ServiceInfoDao">
+  <resultMap id="BaseResultMap" type="com.zxjt.testplatform.model.ServiceInfo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="SERVICE_TYPE" jdbcType="VARCHAR" property="serviceType" />
+    <result column="SERVICE_FUNCTION_ID" jdbcType="VARCHAR" property="serviceFunctionId" />
+    <result column="SERVICE_DESC" jdbcType="VARCHAR" property="serviceDesc" />
+    <result column="ALLOW_OUTWEB" jdbcType="VARCHAR" property="allowOutweb" />
+    <result column="REC_GEN_TIME" jdbcType="TIMESTAMP" property="recGenTime" />
+    <result column="REC_UPD_TIME" jdbcType="TIMESTAMP" property="recUpdTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zxjt.testplatform.model.ServiceInfo">
+    <result column="SERVICE_CONTENT" jdbcType="LONGVARCHAR" property="serviceContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SERVICE_TYPE, SERVICE_FUNCTION_ID, SERVICE_DESC, ALLOW_OUTWEB, REC_GEN_TIME, 
+    REC_UPD_TIME
+  </sql>
+  <sql id="Blob_Column_List">
+    SERVICE_CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.zxjt.testplatform.model.ServiceInfoExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_service_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.zxjt.testplatform.model.ServiceInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_service_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_service_info
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_service_info
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zxjt.testplatform.model.ServiceInfoExample">
+    delete from t_service_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zxjt.testplatform.model.ServiceInfo">
+    insert into t_service_info (ID, SERVICE_TYPE, SERVICE_FUNCTION_ID, 
+      SERVICE_DESC, ALLOW_OUTWEB, REC_GEN_TIME, 
+      REC_UPD_TIME, SERVICE_CONTENT)
+    values (#{id,jdbcType=BIGINT}, #{serviceType,jdbcType=VARCHAR}, #{serviceFunctionId,jdbcType=VARCHAR}, 
+      #{serviceDesc,jdbcType=VARCHAR}, #{allowOutweb,jdbcType=VARCHAR}, #{recGenTime,jdbcType=TIMESTAMP}, 
+      #{recUpdTime,jdbcType=TIMESTAMP}, #{serviceContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxjt.testplatform.model.ServiceInfo">
+    insert into t_service_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="serviceType != null">
+        SERVICE_TYPE,
+      </if>
+      <if test="serviceFunctionId != null">
+        SERVICE_FUNCTION_ID,
+      </if>
+      <if test="serviceDesc != null">
+        SERVICE_DESC,
+      </if>
+      <if test="allowOutweb != null">
+        ALLOW_OUTWEB,
+      </if>
+      <if test="recGenTime != null">
+        REC_GEN_TIME,
+      </if>
+      <if test="recUpdTime != null">
+        REC_UPD_TIME,
+      </if>
+      <if test="serviceContent != null">
+        SERVICE_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serviceType != null">
+        #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFunctionId != null">
+        #{serviceFunctionId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceDesc != null">
+        #{serviceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="allowOutweb != null">
+        #{allowOutweb,jdbcType=VARCHAR},
+      </if>
+      <if test="recGenTime != null">
+        #{recGenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recUpdTime != null">
+        #{recUpdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceContent != null">
+        #{serviceContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zxjt.testplatform.model.ServiceInfoExample" resultType="java.lang.Long">
+    select count(*) from t_service_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_service_info
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceType != null">
+        SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceFunctionId != null">
+        SERVICE_FUNCTION_ID = #{record.serviceFunctionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceDesc != null">
+        SERVICE_DESC = #{record.serviceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowOutweb != null">
+        ALLOW_OUTWEB = #{record.allowOutweb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recGenTime != null">
+        REC_GEN_TIME = #{record.recGenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recUpdTime != null">
+        REC_UPD_TIME = #{record.recUpdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.serviceContent != null">
+        SERVICE_CONTENT = #{record.serviceContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_service_info
+    set ID = #{record.id,jdbcType=BIGINT},
+      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      SERVICE_FUNCTION_ID = #{record.serviceFunctionId,jdbcType=VARCHAR},
+      SERVICE_DESC = #{record.serviceDesc,jdbcType=VARCHAR},
+      ALLOW_OUTWEB = #{record.allowOutweb,jdbcType=VARCHAR},
+      REC_GEN_TIME = #{record.recGenTime,jdbcType=TIMESTAMP},
+      REC_UPD_TIME = #{record.recUpdTime,jdbcType=TIMESTAMP},
+      SERVICE_CONTENT = #{record.serviceContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_service_info
+    set ID = #{record.id,jdbcType=BIGINT},
+      SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      SERVICE_FUNCTION_ID = #{record.serviceFunctionId,jdbcType=VARCHAR},
+      SERVICE_DESC = #{record.serviceDesc,jdbcType=VARCHAR},
+      ALLOW_OUTWEB = #{record.allowOutweb,jdbcType=VARCHAR},
+      REC_GEN_TIME = #{record.recGenTime,jdbcType=TIMESTAMP},
+      REC_UPD_TIME = #{record.recUpdTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxjt.testplatform.model.ServiceInfo">
+    update t_service_info
+    <set>
+      <if test="serviceType != null">
+        SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFunctionId != null">
+        SERVICE_FUNCTION_ID = #{serviceFunctionId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceDesc != null">
+        SERVICE_DESC = #{serviceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="allowOutweb != null">
+        ALLOW_OUTWEB = #{allowOutweb,jdbcType=VARCHAR},
+      </if>
+      <if test="recGenTime != null">
+        REC_GEN_TIME = #{recGenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recUpdTime != null">
+        REC_UPD_TIME = #{recUpdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceContent != null">
+        SERVICE_CONTENT = #{serviceContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zxjt.testplatform.model.ServiceInfo">
+    update t_service_info
+    set SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      SERVICE_FUNCTION_ID = #{serviceFunctionId,jdbcType=VARCHAR},
+      SERVICE_DESC = #{serviceDesc,jdbcType=VARCHAR},
+      ALLOW_OUTWEB = #{allowOutweb,jdbcType=VARCHAR},
+      REC_GEN_TIME = #{recGenTime,jdbcType=TIMESTAMP},
+      REC_UPD_TIME = #{recUpdTime,jdbcType=TIMESTAMP},
+      SERVICE_CONTENT = #{serviceContent,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxjt.testplatform.model.ServiceInfo">
+    update t_service_info
+    set SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      SERVICE_FUNCTION_ID = #{serviceFunctionId,jdbcType=VARCHAR},
+      SERVICE_DESC = #{serviceDesc,jdbcType=VARCHAR},
+      ALLOW_OUTWEB = #{allowOutweb,jdbcType=VARCHAR},
+      REC_GEN_TIME = #{recGenTime,jdbcType=TIMESTAMP},
+      REC_UPD_TIME = #{recUpdTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

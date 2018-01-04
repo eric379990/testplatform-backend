@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjt.testplatform.dao.RowPtywInfoDao">
+  <resultMap id="BaseResultMap" type="com.zxjt.testplatform.model.RowPtywInfo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <id column="cid" jdbcType="BIGINT" property="cid" />
+    <id column="rid" jdbcType="BIGINT" property="rid" />
+    <result column="cvalue" jdbcType="VARCHAR" property="cvalue" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, cid, rid, cvalue
+  </sql>
+  <select id="selectByExample" parameterType="com.zxjt.testplatform.model.RowPtywInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_row_ptyw_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.zxjt.testplatform.model.RowPtywInfoKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_row_ptyw_info
+    where ID = #{id,jdbcType=BIGINT}
+      and cid = #{cid,jdbcType=BIGINT}
+      and rid = #{rid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zxjt.testplatform.model.RowPtywInfoKey">
+    delete from t_row_ptyw_info
+    where ID = #{id,jdbcType=BIGINT}
+      and cid = #{cid,jdbcType=BIGINT}
+      and rid = #{rid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zxjt.testplatform.model.RowPtywInfoExample">
+    delete from t_row_ptyw_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zxjt.testplatform.model.RowPtywInfo">
+    insert into t_row_ptyw_info (ID, cid, rid, cvalue
+      )
+    values (#{id,jdbcType=BIGINT}, #{cid,jdbcType=BIGINT}, #{rid,jdbcType=BIGINT}, #{cvalue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxjt.testplatform.model.RowPtywInfo">
+    insert into t_row_ptyw_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="cvalue != null">
+        cvalue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="rid != null">
+        #{rid,jdbcType=BIGINT},
+      </if>
+      <if test="cvalue != null">
+        #{cvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zxjt.testplatform.model.RowPtywInfoExample" resultType="java.lang.Long">
+    select count(*) from t_row_ptyw_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_row_ptyw_info
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=BIGINT},
+      </if>
+      <if test="record.rid != null">
+        rid = #{record.rid,jdbcType=BIGINT},
+      </if>
+      <if test="record.cvalue != null">
+        cvalue = #{record.cvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_row_ptyw_info
+    set ID = #{record.id,jdbcType=BIGINT},
+      cid = #{record.cid,jdbcType=BIGINT},
+      rid = #{record.rid,jdbcType=BIGINT},
+      cvalue = #{record.cvalue,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxjt.testplatform.model.RowPtywInfo">
+    update t_row_ptyw_info
+    <set>
+      <if test="cvalue != null">
+        cvalue = #{cvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+      and cid = #{cid,jdbcType=BIGINT}
+      and rid = #{rid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxjt.testplatform.model.RowPtywInfo">
+    update t_row_ptyw_info
+    set cvalue = #{cvalue,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+      and cid = #{cid,jdbcType=BIGINT}
+      and rid = #{rid,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectDistinctId" resultType="java.lang.Long">
+    SELECT DISTINCT id from t_row_ptyw_info;
+  </select>
+</mapper>
